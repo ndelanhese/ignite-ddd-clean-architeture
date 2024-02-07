@@ -1,0 +1,21 @@
+{
+	"name": "ignite-clean-ddd",
+	"module": "index.ts",
+	"type": "module",
+	"scripts": {
+		"test": "bun vitest run",
+		"test:watch": "bun vitest"
+	},
+	"dependencies": {
+		"crypto": "1.0.1"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.5.3",
+		"@types/bun": "1.0.5",
+		"vite-tsconfig-paths": "4.3.1",
+		"vitest": "1.2.2"
+	},
+	"peerDependencies": {
+		"typescript": "5.0.0"
+	}
+}
