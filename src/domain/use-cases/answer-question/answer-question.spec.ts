@@ -1,10 +1,10 @@
-import { AnswersRepository } from "@/domain/repositories/answers-repository";
 import { Answer } from "@entities/answer";
+import { AnswersRepository } from "@repositories/answers-repository";
 import { AnswerQuestionUseCase } from "./answer-question";
 
 describe("Answer Question", () => {
 	const fakeAnswersRepository: AnswersRepository = {
-		create: async (answer: Answer) => {
+		create: async (_: Answer) => {
 			return;
 		},
 	};

@@ -1,0 +1,20 @@
+pre-commit:
+  commands:
+    check-and-lint:
+      glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}"
+      run: bun biome check --apply --no-errors-on-unmatched --files-ignore-unknown=true {staged_files} && git update-index --again
+    test:
+      run: bun run test
+
+prepare-commit-msg:
+  commands:
+    commitzen:
+      interactive: true
+      run: bun run cz
+      env:
+        LEFTHOOK: 0
+
+commit-msg:
+  commands:
+    "lint commit message":
+      run: bun run commitlint --edit {1}
