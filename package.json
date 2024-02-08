@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.5.3",
+    "@commitlint/cli": "18.6.0",
     "@commitlint/config-conventional": "18.6.0",
     "@types/bun": "latest",
     "commitizen": "4.3.0",
