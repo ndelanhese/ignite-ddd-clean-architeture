@@ -13,6 +13,7 @@
       "@entities/*": ["./src/domain/entities/*"],
       "@repositories/*": ["./src/domain/repositories/*"],
       "@use-cases/*": ["./src/domain/use-cases/*"],
+      "@value-objects/*": ["./src/domain/value-objects/*"],
       "@/*": ["./src/*"],
     },
 
