@@ -1,4 +1,5 @@
 pre-commit:
+  parallel: true
   commands:
     check-and-lint:
       glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}"
@@ -16,5 +17,5 @@ prepare-commit-msg:
 
 commit-msg:
   commands:
-    "lint commit message":
-      run: bun commitlint --from HEAD~1 --to HEAD --verbose
+    lint-commit:
+      run: bunx commitlint --from HEAD~1 --to HEAD
