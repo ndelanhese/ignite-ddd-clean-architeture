@@ -11,7 +11,7 @@ prepare-commit-msg:
   commands:
     commitzen:
       interactive: true
-      run: bun run cz
+      run: bunx cz
       env:
         LEFTHOOK: 0
       follow: true
