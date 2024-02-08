@@ -1,17 +1,17 @@
-# pre-commit:
-#   parallel: true
-#   commands:
-#     check-and-lint:
-#       glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}"
-#       run: bun biome check --apply --no-errors-on-unmatched --files-ignore-unknown=true {staged_files} && git update-index --again
-#     test:
-#       run: bun run test
+pre-commit:
+  parallel: true
+  commands:
+    check-and-lint:
+      glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}"
+      run: bun biome check --apply --no-errors-on-unmatched --files-ignore-unknown=true {staged_files} && git update-index --again
+    test:
+      run: bun run test
 
 prepare-commit-msg:
   commands:
     commitzen:
       interactive: true
-      run: LEFTHOOK=0 yarn run cz
+      run: LEFTHOOK=0 bunx cz
 
 commit-msg:
   commands:
