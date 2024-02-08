@@ -14,3 +14,4 @@ prepare-commit-msg:
       run: bun run cz
       env:
         LEFTHOOK: 0
+      follow: true
