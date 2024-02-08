@@ -14,10 +14,3 @@ prepare-commit-msg:
       run: bun run cz
       env:
         LEFTHOOK: 0
-    lint-commit:
-      run: bunx commitlint --edit {1}
-
-# commit-msg:
-#   commands:
-#     lint-commit:
-#       run: bunx commitlint --edit {1}
