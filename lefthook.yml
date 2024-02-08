@@ -18,4 +18,4 @@ prepare-commit-msg:
 commit-msg:
   commands:
     lint-commit:
-      run: bunx commitlint --edit
+      run: bunx commitlint --edit {1}
