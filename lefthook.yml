@@ -7,11 +7,11 @@ pre-commit:
     test:
       run: bun run test
 
-prepare-commit-msg:
-  commands:
-    commitzen:
-      interactive: true
-      run: LEFTHOOK=0 bunx cz
+# prepare-commit-msg:
+#   commands:
+#     commitzen:
+#       interactive: true
+#       run: LEFTHOOK=0 bunx cz
 
 commit-msg:
   commands:
