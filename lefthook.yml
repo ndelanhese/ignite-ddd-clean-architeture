@@ -17,4 +17,4 @@ prepare-commit-msg:
 commit-msg:
   commands:
     "lint commit message":
-      run: bunx commitlint --edit {1}
+      run: bun commitlint --from HEAD~1 --to HEAD --verbose
