@@ -1,5 +1,5 @@
 import { UniqueEntityId } from "@core/value-objects/unique-entity-id";
-import { Slug } from "@value-objects/slug";
+import { Slug } from "@forum-value-objects/slug";
 
 export type QuestionProps = {
 	authorId: UniqueEntityId;

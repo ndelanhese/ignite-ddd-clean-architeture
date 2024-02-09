@@ -10,10 +10,10 @@
     "forceConsistentCasingInFileNames": true,
 
     "paths": {
-      "@entities/*": ["./src/domain/entities/*"],
-      "@repositories/*": ["./src/domain/repositories/*"],
-      "@use-cases/*": ["./src/domain/use-cases/*"],
-      "@value-objects/*": ["./src/domain/value-objects/*"],
+      "@forum-entities/*": ["./src/domain/forum/enterprise/entities/*"],
+      "@forum-repositories/*": ["./src/domain/forum/application/repositories/*"],
+      "@forum-use-cases/*": ["./src/domain/forum/application/use-cases/*"],
+      "@forum-value-objects/*": ["./src/domain/forum/enterprise/value-objects/*"],
       "@core/*": ["./src/core/*"],
       "@/*": ["./src/*"],
     },

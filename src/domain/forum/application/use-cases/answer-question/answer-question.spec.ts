@@ -1,5 +1,5 @@
-import { Answer } from "@entities/answer";
-import { AnswersRepository } from "@repositories/answers-repository";
+import { Answer } from "@forum-entities/answer";
+import { AnswersRepository } from "@forum-repositories/answers-repository";
 import { AnswerQuestionUseCase } from "./answer-question";
 
 describe("Answer Question", () => {

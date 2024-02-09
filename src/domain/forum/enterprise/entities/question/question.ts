@@ -3,7 +3,7 @@ import { Optional } from "@core/types/optional";
 import { UniqueEntityId } from "@core/value-objects/unique-entity-id";
 import { QuestionProps } from "./question.types";
 import dayjs = require("dayjs");
-import { Slug } from "@value-objects/slug";
+import { Slug } from "@forum-value-objects/slug";
 
 export class Question extends Entity<QuestionProps> {
 	static create(
