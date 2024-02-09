@@ -1,4 +1,12 @@
 import { Entity } from "@core/entities/entity";
+import { UniqueEntityId } from "@core/value-objects/unique-entity-id";
 import { InstructorProps } from "@entities/instructor/question.types";
+import { StudentProps } from "./student.types";
 
-export class Instructor extends Entity<InstructorProps> {}
+export class Student extends Entity<InstructorProps> {
+	static create(props: StudentProps, id?: UniqueEntityId) {
+		const student = new Student(props, id);
+
+		return student;
+	}
+}
