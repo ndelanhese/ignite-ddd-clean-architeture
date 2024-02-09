@@ -1,7 +1,10 @@
 import { UniqueEntityId } from "@core/value-objects/unique-entity-id";
 import { Answer } from "@forum-entities/answer";
 import { AnswersRepository } from "@forum-repositories/answers-repository";
-import { AnswerQuestionUseCaseProps } from "./answer-question.types";
+import {
+	AnswerQuestionUseCaseProps,
+	AnswerQuestionUseCaseResponse,
+} from "./answer-question.types";
 
 export class AnswerQuestionUseCase {
 	constructor(private answersRepository: AnswersRepository) {}
@@ -10,7 +13,7 @@ export class AnswerQuestionUseCase {
 		instructorId,
 		questionId,
 		content,
-	}: AnswerQuestionUseCaseProps) {
+	}: AnswerQuestionUseCaseProps): Promise<AnswerQuestionUseCaseResponse> {
 		const answer = Answer.create({
 			content,
 			authorId: new UniqueEntityId(instructorId),
@@ -19,6 +22,6 @@ export class AnswerQuestionUseCase {
 
 		await this.answersRepository.create(answer);
 
-		return answer;
+		return { answer };
 	}
 }
