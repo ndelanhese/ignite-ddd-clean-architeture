@@ -10,6 +10,7 @@
   "dependencies": {
     "crypto": "1.0.1",
     "cspell-dict-pt-br": "1.1.1",
+    "dayjs": "1.11.10",
     "lefthook": "1.6.1"
   },
   "devDependencies": {
