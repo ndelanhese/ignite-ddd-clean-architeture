@@ -13,17 +13,37 @@ describe("Delete a question", () => {
 	});
 
 	it("should be able to delete a question", async () => {
-		const { newQuestion } = makeQuestion({}, new UniqueEntityId("question-1"));
+		const authorId = new UniqueEntityId("question-author");
+		const questionId = new UniqueEntityId("question-id");
+		const { newQuestion } = makeQuestion({ authorId }, questionId);
 
 		await inMemoryQuestionsRepository.create(newQuestion);
 
 		await sut.execute({
-			questionId: "question-1",
+			authorId: authorId.toString(),
+			questionId: questionId.toString(),
 		});
 
-		const hasItemInMemory =
-			await inMemoryQuestionsRepository.findById("question-1");
+		const hasItemInMemory = await inMemoryQuestionsRepository.findById(
+			questionId.toString(),
+		);
 
 		expect(hasItemInMemory).toBeNull();
+	});
+
+	it("should not be able to delete a question from another author", async () => {
+		const authorId = new UniqueEntityId("question-author");
+		const questionId = new UniqueEntityId("question-id");
+		const { newQuestion } = makeQuestion({ authorId }, questionId);
+
+		await inMemoryQuestionsRepository.create(newQuestion);
+
+		expect(
+			async () =>
+				await sut.execute({
+					authorId: "wrong-author-id",
+					questionId: questionId.toString(),
+				}),
+		).rejects.toBeInstanceOf(Error);
 	});
 });
