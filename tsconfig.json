@@ -12,10 +12,11 @@
     "paths": {
       "@forum-entities/*": ["./src/domain/forum/enterprise/entities/*"],
       "@forum-repositories/*": ["./src/domain/forum/application/repositories/*"],
-      "@test-repositories/*": ["./test/repositories/*"],
       "@forum-use-cases/*": ["./src/domain/forum/application/use-cases/*"],
       "@forum-value-objects/*": ["./src/domain/forum/enterprise/value-objects/*"],
       "@core/*": ["./src/core/*"],
+      "@test-repositories/*": ["./test/repositories/*"],
+      "@test-factories/*": ["./test/factories/*"],
       "@/*": ["./src/*"],
     },
 

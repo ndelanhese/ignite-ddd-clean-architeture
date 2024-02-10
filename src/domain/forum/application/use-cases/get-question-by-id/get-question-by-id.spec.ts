@@ -1,7 +1,5 @@
-import { UniqueEntityId } from "@core/value-objects/unique-entity-id";
-import { Question } from "@forum-entities/question";
-import { Slug } from "@forum-value-objects/slug";
-import { InMemoryQuestionsRepository } from "@test-repositories/in-memory-questions-repository";
+import { makeQuestion } from "@test-factories/make-question";
+import InMemoryQuestionsRepository from "@test-repositories/in-memory-questions-repository";
 import { GetQuestionByIdUseCase } from "./get-question-by-id";
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository;
@@ -14,16 +12,7 @@ describe("Get question by id", () => {
 	});
 
 	it("should be able to get a question by id", async () => {
-		const fakeQuestionId = new UniqueEntityId("123");
-		const newQuestion = Question.create(
-			{
-				title: "Example question",
-				slug: Slug.create("example-question"),
-				authorId: new UniqueEntityId("1"),
-				content: "Bla bla bla",
-			},
-			fakeQuestionId,
-		);
+		const { fakeQuestionId, newQuestion } = makeQuestion();
 
 		await inMemoryQuestionsRepository.create(newQuestion);
 
