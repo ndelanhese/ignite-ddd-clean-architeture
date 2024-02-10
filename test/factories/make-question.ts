@@ -11,7 +11,7 @@ export const makeQuestion = (
 	const newQuestion = Question.create(
 		{
 			title: faker.lorem.sentence(),
-			authorId: new UniqueEntityId("1"),
+			authorId: new UniqueEntityId(),
 			content: faker.lorem.text(),
 			...override,
 		},
