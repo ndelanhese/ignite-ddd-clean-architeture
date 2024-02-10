@@ -1,5 +1,5 @@
 import { UniqueEntityId } from "@core/value-objects/unique-entity-id";
-import { QuestionComment } from "@forum-entities/question-comments";
+import { QuestionComment } from "@forum-entities/question-comment";
 import { QuestionCommentsRepository } from "@forum-repositories/question-comments-repository";
 import { QuestionsRepository } from "@forum-repositories/questions-repository";
 import {

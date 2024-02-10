@@ -1,4 +1,4 @@
-import { QuestionComment } from "@forum-entities/question-comments";
+import { QuestionComment } from "@forum-entities/question-comment";
 
 export type CommentOnQuestionUseCaseProps = {
 	authorId: string;

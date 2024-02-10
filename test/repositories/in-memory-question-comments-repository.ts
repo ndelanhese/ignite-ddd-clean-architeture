@@ -1,4 +1,4 @@
-import { QuestionComment } from "@forum-entities/question-comments";
+import { QuestionComment } from "@forum-entities/question-comment";
 import { QuestionCommentsRepository } from "@forum-repositories/question-comments-repository";
 
 export class InMemoryQuestionCommentsRepository
