@@ -2,9 +2,7 @@ import { UniqueEntityId } from "@core/value-objects/unique-entity-id";
 import { Question } from "@forum-entities/question";
 import { QuestionsRepository } from "@forum-repositories/questions-repository";
 
-export default class InMemoryQuestionsRepository
-	implements QuestionsRepository
-{
+export class InMemoryQuestionsRepository implements QuestionsRepository {
 	public items: Question[] = [];
 
 	async findById(id: string): Promise<Question | null> {
