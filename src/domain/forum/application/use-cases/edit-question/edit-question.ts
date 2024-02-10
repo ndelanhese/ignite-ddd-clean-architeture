@@ -1,5 +1,8 @@
 import { QuestionsRepository } from "@forum-repositories/questions-repository";
-import { EditQuestionUseCaseProps } from "./edit-question.types";
+import {
+	EditQuestionUseCaseProps,
+	EditQuestionUseCaseResponse,
+} from "./edit-question.types";
 
 export class EditQuestionUseCase {
 	constructor(private questionsRepository: QuestionsRepository) {}
@@ -9,7 +12,7 @@ export class EditQuestionUseCase {
 		questionId,
 		content,
 		title,
-	}: EditQuestionUseCaseProps): Promise<void> {
+	}: EditQuestionUseCaseProps): Promise<EditQuestionUseCaseResponse> {
 		const question = await this.questionsRepository.findById(questionId);
 
 		if (!question) {
@@ -24,5 +27,9 @@ export class EditQuestionUseCase {
 		question.content = content;
 
 		await this.questionsRepository.save(question);
+
+		return {
+			question,
+		};
 	}
 }
