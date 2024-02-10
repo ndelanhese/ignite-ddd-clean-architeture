@@ -20,6 +20,12 @@ export default class InMemoryQuestionsRepository
 		return this.items.find((item) => item.slug.value === slug) ?? null;
 	}
 
+	async save(question: Question): Promise<void> {
+		const itemIndex = this.items.findIndex((item) => item.id === question.id);
+
+		this.items[itemIndex] = question;
+	}
+
 	async create(question: Question) {
 		this.items.push(question);
 	}
