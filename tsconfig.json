@@ -14,6 +14,7 @@
       "@forum-repositories/*": ["./src/domain/forum/application/repositories/*"],
       "@forum-use-cases/*": ["./src/domain/forum/application/use-cases/*"],
       "@forum-value-objects/*": ["./src/domain/forum/enterprise/value-objects/*"],
+      "@forum-use-case-errors/*": ["./src/domain/forum/application/use-case-error/*"],
       "@core/*": ["./src/core/*"],
       "@test-repositories/*": ["./test/repositories/*"],
       "@test-factories/*": ["./test/factories/*"],

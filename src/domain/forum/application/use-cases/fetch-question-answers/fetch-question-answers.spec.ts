@@ -29,11 +29,13 @@ describe("Fetch question answers", () => {
 		await inMemoryAnswersRepository.create(secondAnswer);
 		await inMemoryAnswersRepository.create(thirtyAnswer);
 
-		const { answers } = await sut.execute({
+		const result = await sut.execute({
 			questionId: fakeQuestionId.toString(),
 			page: 1,
 		});
+		const answers = result.value?.answers;
 
+		expect(result.isRight()).toBeTruthy();
 		expect(answers).toHaveLength(3);
 		expect(answers).toEqual([
 			expect.objectContaining({
@@ -57,11 +59,13 @@ describe("Fetch question answers", () => {
 			await inMemoryAnswersRepository.create(newAnswer);
 		}
 
-		const { answers } = await sut.execute({
+		const result = await sut.execute({
 			questionId: fakeQuestionId.toString(),
 			page: 2,
 		});
+		const answers = result.value?.answers;
 
+		expect(result.isRight()).toBeTruthy();
 		expect(answers).toHaveLength(2);
 	});
 });

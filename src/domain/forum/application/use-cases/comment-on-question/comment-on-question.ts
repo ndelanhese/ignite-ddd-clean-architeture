@@ -1,7 +1,9 @@
+import { left, right } from "@core/either";
 import { UniqueEntityId } from "@core/value-objects/unique-entity-id";
 import { QuestionComment } from "@forum-entities/question-comment";
 import { QuestionCommentsRepository } from "@forum-repositories/question-comments-repository";
 import { QuestionsRepository } from "@forum-repositories/questions-repository";
+import { ResourceNotFoundError } from "@forum-use-case-errors/resource-not-found-error";
 import {
 	CommentOnQuestionUseCaseProps,
 	CommentOnQuestionUseCaseResponse,
@@ -21,7 +23,7 @@ export class CommentOnQuestionUseCase {
 		const question = await this.questionsRepository.findById(questionId);
 
 		if (!question) {
-			throw new Error("Question not found.");
+			return left(new ResourceNotFoundError());
 		}
 
 		const questionComment = QuestionComment.create({
@@ -32,6 +34,6 @@ export class CommentOnQuestionUseCase {
 
 		await this.questionCommentsRepository.create(questionComment);
 
-		return { questionComment };
+		return right({ questionComment });
 	}
 }

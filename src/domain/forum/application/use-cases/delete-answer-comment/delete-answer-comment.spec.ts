@@ -1,5 +1,6 @@
 import { UniqueEntityId } from "@core/value-objects/unique-entity-id";
 import { faker } from "@faker-js/faker";
+import { NotAllowedError } from "@forum-use-case-errors/not-allowed-error";
 import { makeAnswerComment } from "@test-factories/make-answer-comment";
 import { InMemoryAnswerCommentsRepository } from "@test-repositories/in-memory-answer-comments-repository";
 import { DeleteAnswerCommentUseCase } from "./delete-answer-comment";
@@ -36,12 +37,12 @@ describe("Delete Answer comment", () => {
 
 		await inMemoryAnswerCommentsRepository.create(newAnswerComment);
 
-		expect(
-			async () =>
-				await sut.execute({
-					authorId: "wrong-author-id",
-					answerCommentId: newAnswerComment.id.toString(),
-				}),
-		).rejects.toBeInstanceOf(Error);
+		const result = await sut.execute({
+			authorId: "wrong-author-id",
+			answerCommentId: newAnswerComment.id.toString(),
+		});
+
+		expect(result.isLeft()).toBe(true);
+		expect(result.value).toBeInstanceOf(NotAllowedError);
 	});
 });

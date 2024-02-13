@@ -1,4 +1,6 @@
+import { left, right } from "@core/either";
 import { QuestionsRepository } from "@forum-repositories/questions-repository";
+import { ResourceNotFoundError } from "@forum-use-case-errors/resource-not-found-error";
 import {
 	GetQuestionBySlugUseCaseProps,
 	GetQuestionBySlugUseCaseResponse,
@@ -13,9 +15,9 @@ export class GetQuestionBySlugUseCase {
 		const question = await this.questionsRepository.findBySlug(slug);
 
 		if (!question) {
-			throw new Error("Question not found.");
+			return left(new ResourceNotFoundError());
 		}
 
-		return { question };
+		return right({ question });
 	}
 }

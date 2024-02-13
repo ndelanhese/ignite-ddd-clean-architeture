@@ -1,4 +1,7 @@
+import { left, right } from "@core/either";
 import { QuestionsRepository } from "@forum-repositories/questions-repository";
+import { NotAllowedError } from "@forum-use-case-errors/not-allowed-error";
+import { ResourceNotFoundError } from "@forum-use-case-errors/resource-not-found-error";
 import {
 	EditQuestionUseCaseProps,
 	EditQuestionUseCaseResponse,
@@ -16,11 +19,11 @@ export class EditQuestionUseCase {
 		const question = await this.questionsRepository.findById(questionId);
 
 		if (!question) {
-			throw new Error("Question nof found.");
+			return left(new ResourceNotFoundError());
 		}
 
 		if (authorId !== question.authorId.toString()) {
-			throw new Error("Not allowed.");
+			return left(new NotAllowedError());
 		}
 
 		question.title = title;
@@ -28,8 +31,8 @@ export class EditQuestionUseCase {
 
 		await this.questionsRepository.save(question);
 
-		return {
+		return right({
 			question,
-		};
+		});
 	}
 }

@@ -1,3 +1,4 @@
+import { right } from "@core/either";
 import { AnswerCommentsRepository } from "@forum-repositories/answer-comments-repository";
 import {
 	FetchAnswerCommentsUseCaseProps,
@@ -16,6 +17,6 @@ export class FetchAnswerCommentsUseCase {
 				page,
 			});
 
-		return { answerComments };
+		return right({ answerComments });
 	}
 }

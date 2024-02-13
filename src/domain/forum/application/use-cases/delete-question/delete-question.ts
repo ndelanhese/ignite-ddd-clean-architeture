@@ -1,5 +1,11 @@
+import { left, right } from "@core/either";
 import { QuestionsRepository } from "@forum-repositories/questions-repository";
-import { DeleteQuestionUseCaseProps } from "./delete-question.types";
+import { NotAllowedError } from "@forum-use-case-errors/not-allowed-error";
+import { ResourceNotFoundError } from "@forum-use-case-errors/resource-not-found-error";
+import {
+	DeleteQuestionUseCaseProps,
+	DeleteQuestionUseCaseResponse,
+} from "./delete-question.types";
 
 export class DeleteQuestionUseCase {
 	constructor(private questionsRepository: QuestionsRepository) {}
@@ -7,17 +13,19 @@ export class DeleteQuestionUseCase {
 	async execute({
 		authorId,
 		questionId,
-	}: DeleteQuestionUseCaseProps): Promise<void> {
+	}: DeleteQuestionUseCaseProps): Promise<DeleteQuestionUseCaseResponse> {
 		const question = await this.questionsRepository.findById(questionId);
 
 		if (!question) {
-			throw new Error("Question nof found.");
+			return right(new ResourceNotFoundError());
 		}
 
 		if (authorId !== question.authorId.toString()) {
-			throw new Error("Not allowed.");
+			return left(new NotAllowedError());
 		}
 
 		await this.questionsRepository.delete(question);
+
+		return right({});
 	}
 }

@@ -1,3 +1,4 @@
+import { right } from "@core/either";
 import { UniqueEntityId } from "@core/value-objects/unique-entity-id";
 import { Answer } from "@forum-entities/answer";
 import { AnswersRepository } from "@forum-repositories/answers-repository";
@@ -22,6 +23,6 @@ export class AnswerQuestionUseCase {
 
 		await this.answersRepository.create(answer);
 
-		return { answer };
+		return right({ answer });
 	}
 }

@@ -1,4 +1,5 @@
 import { UniqueEntityId } from "@core/value-objects/unique-entity-id";
+import { NotAllowedError } from "@forum-use-case-errors/not-allowed-error";
 import { makeAnswer } from "@test-factories/make-answer";
 import { InMemoryAnswersRepository } from "@test-repositories/in-memory-answers-repository";
 import { DeleteAnswerUseCase } from "./delete-answer";
@@ -38,12 +39,12 @@ describe("Delete an answer", () => {
 
 		await inMemoryAnswersRepository.create(newAnswer);
 
-		expect(
-			async () =>
-				await sut.execute({
-					authorId: "wrong-author-id",
-					answerId: answerId.toString(),
-				}),
-		).rejects.toBeInstanceOf(Error);
+		const result = await sut.execute({
+			authorId: "wrong-author-id",
+			answerId: answerId.toString(),
+		});
+
+		expect(result.isLeft()).toBeTruthy();
+		expect(result.value).toBeInstanceOf(NotAllowedError);
 	});
 });

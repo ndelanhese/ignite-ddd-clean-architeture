@@ -1,3 +1,4 @@
+import { right } from "@core/either";
 import { AnswersRepository } from "@forum-repositories/answers-repository";
 import {
 	FetchQuestionAnswersUseCaseProps,
@@ -16,6 +17,6 @@ export class FetchQuestionAnswersUseCase {
 			{ page },
 		);
 
-		return { answers };
+		return right({ answers });
 	}
 }

@@ -1,3 +1,4 @@
+import { right } from "@core/either";
 import { QuestionsRepository } from "@forum-repositories/questions-repository";
 import {
 	FetchRecentQuestionsUseCaseProps,
@@ -12,6 +13,6 @@ export class FetchRecentQuestionsUseCase {
 	}: FetchRecentQuestionsUseCaseProps): Promise<FetchRecentQuestionsUseCaseResponse> {
 		const questions = await this.questionsRepository.findManyRecent({ page });
 
-		return { questions };
+		return right({ questions });
 	}
 }
