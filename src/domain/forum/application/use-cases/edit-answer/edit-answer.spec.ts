@@ -1,5 +1,6 @@
 import { UniqueEntityId } from "@core/value-objects/unique-entity-id";
 import { faker } from "@faker-js/faker";
+import { NotAllowedError } from "@forum-use-case-errors/not-allowed-error";
 import { makeAnswer } from "@test-factories/make-answer";
 import { InMemoryAnswersRepository } from "@test-repositories/in-memory-answers-repository";
 import { EditAnswerUseCase } from "./edit-answer";
@@ -44,13 +45,14 @@ describe("Edit an answer", () => {
 		await inMemoryAnswersRepository.create(newAnswer);
 
 		const fakeAnswerContent = faker.lorem.text();
-		expect(
-			async () =>
-				await sut.execute({
-					authorId: "wrong-author-id",
-					answerId: answerId.toString(),
-					content: fakeAnswerContent,
-				}),
-		).rejects.toBeInstanceOf(Error);
+
+		const result = await sut.execute({
+			authorId: "wrong-author-id",
+			answerId: answerId.toString(),
+			content: fakeAnswerContent,
+		});
+
+		expect(result.isLeft()).toBe(true);
+		expect(result.value).toBeInstanceOf(NotAllowedError);
 	});
 });

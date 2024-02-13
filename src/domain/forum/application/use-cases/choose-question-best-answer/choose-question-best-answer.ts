@@ -1,6 +1,12 @@
+import { left, right } from "@core/either";
 import { AnswersRepository } from "@forum-repositories/answers-repository";
 import { QuestionsRepository } from "@forum-repositories/questions-repository";
-import { ChooseQuestionBestAnswerUseCaseProps } from "./choose-question-best-answer.types";
+import { NotAllowedError } from "@forum-use-case-errors/not-allowed-error";
+import { ResourceNotFoundError } from "@forum-use-case-errors/resource-not-found-error";
+import {
+	ChooseQuestionBestAnswerUseCaseProps,
+	ChooseQuestionBestAnswerUseCaseResponse,
+} from "./choose-question-best-answer.types";
 
 export class ChooseQuestionBestAnswerUseCase {
 	constructor(
@@ -11,11 +17,11 @@ export class ChooseQuestionBestAnswerUseCase {
 	async execute({
 		answerId,
 		authorId,
-	}: ChooseQuestionBestAnswerUseCaseProps): Promise<void> {
+	}: ChooseQuestionBestAnswerUseCaseProps): Promise<ChooseQuestionBestAnswerUseCaseResponse> {
 		const answer = await this.answersRepository.findById(answerId);
 
 		if (!answer) {
-			throw new Error("Answer nof found.");
+			return left(new ResourceNotFoundError());
 		}
 
 		const question = await this.questionsRepository.findById(
@@ -23,15 +29,17 @@ export class ChooseQuestionBestAnswerUseCase {
 		);
 
 		if (!question) {
-			throw new Error("Question nof found.");
+			return left(new ResourceNotFoundError());
 		}
 
 		if (authorId !== question.authorId.toString()) {
-			throw new Error("Not allowed.");
+			return left(new NotAllowedError());
 		}
 
 		question.bestAnswerId = answer.id;
 
 		await this.questionsRepository.save(question);
+
+		return right({ question });
 	}
 }

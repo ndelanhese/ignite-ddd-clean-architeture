@@ -1,4 +1,5 @@
 import { UniqueEntityId } from "@core/value-objects/unique-entity-id";
+import { NotAllowedError } from "@forum-use-case-errors/not-allowed-error";
 import { makeAnswer } from "@test-factories/make-answer";
 import { makeQuestion } from "@test-factories/make-question";
 import { InMemoryAnswersRepository } from "@test-repositories/in-memory-answers-repository";
@@ -53,12 +54,12 @@ describe("Choose question best answer", () => {
 		await inMemoryQuestionsRepository.create(newQuestion);
 		await inMemoryAnswersRepository.create(newAnswer);
 
-		expect(
-			async () =>
-				await sut.execute({
-					authorId: "wrong-author-id",
-					answerId: newAnswer.id.toString(),
-				}),
-		).rejects.toBeInstanceOf(Error);
+		const result = await sut.execute({
+			authorId: "wrong-author-id",
+			answerId: newAnswer.id.toString(),
+		});
+
+		expect(result.isLeft()).toBe(true);
+		expect(result.value).toBeInstanceOf(NotAllowedError);
 	});
 });

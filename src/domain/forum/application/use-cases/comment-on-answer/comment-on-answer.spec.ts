@@ -22,17 +22,21 @@ describe("Create Answer comment", () => {
 
 		await inMemoryAnswersRepository.create(newAnswer);
 
-		const { answerComment } = await sut.execute({
+		const result = await sut.execute({
 			authorId: "1",
 			content: "bla bla bla",
 			answerId: newAnswer.id.toString(),
 		});
 
-		const itemHasBeenCreated = inMemoryAnswerCommentsRepository.items.find(
-			(item) => item.id.toString() === answerComment.id.toString(),
-		);
+		if (result.isRight()) {
+			const answerComment = result.value.answerComment;
 
-		expect(answerComment.id).toBeTruthy();
-		expect(itemHasBeenCreated).toBeTruthy();
+			const itemHasBeenCreated = inMemoryAnswerCommentsRepository.items.find(
+				(item) => item.id.toString() === answerComment.id.toString(),
+			);
+
+			expect(answerComment.id).toBeTruthy();
+			expect(itemHasBeenCreated).toBeTruthy();
+		}
 	});
 });

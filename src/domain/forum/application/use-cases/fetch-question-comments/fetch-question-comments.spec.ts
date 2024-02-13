@@ -30,11 +30,13 @@ describe("Fetch question comments", () => {
 		await inMemoryQuestionCommentsRepository.create(secondAnswer);
 		await inMemoryQuestionCommentsRepository.create(thirtyAnswer);
 
-		const { questionComments } = await sut.execute({
+		const result = await sut.execute({
 			questionId: fakeQuestionId.toString(),
 			page: 1,
 		});
+		const questionComments = result.value?.questionComments;
 
+		expect(result.isRight()).toBeTruthy();
 		expect(questionComments).toHaveLength(3);
 		expect(questionComments).toEqual([
 			expect.objectContaining({
@@ -58,11 +60,13 @@ describe("Fetch question comments", () => {
 			await inMemoryQuestionCommentsRepository.create(newQuestionComment);
 		}
 
-		const { questionComments } = await sut.execute({
+		const result = await sut.execute({
 			questionId: fakeQuestionId.toString(),
 			page: 2,
 		});
+		const questionComments = result.value?.questionComments;
 
+		expect(result.isRight()).toBeTruthy();
 		expect(questionComments).toHaveLength(2);
 	});
 });

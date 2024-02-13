@@ -1,4 +1,6 @@
+import { Either } from "@core/either";
 import { AnswerComment } from "@forum-entities/answer-comment";
+import { ResourceNotFoundError } from "@forum-use-case-errors/resource-not-found-error";
 
 export type CommentOnAnswerUseCaseProps = {
 	authorId: string;
@@ -6,6 +8,9 @@ export type CommentOnAnswerUseCaseProps = {
 	content: string;
 };
 
-export type CommentOnAnswerUseCaseResponse = {
-	answerComment: AnswerComment;
-};
+export type CommentOnAnswerUseCaseResponse = Either<
+	ResourceNotFoundError,
+	{
+		answerComment: AnswerComment;
+	}
+>;

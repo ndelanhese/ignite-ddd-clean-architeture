@@ -11,19 +11,22 @@ describe("Create Questions", () => {
 	});
 
 	it("should be able to create a question", async () => {
-		const { question } = await sut.execute({
+		const result = await sut.execute({
 			authorId: "1",
 			content: "bla bla bla",
 			title: "Title test",
 		});
 
+		const question = result?.value?.question;
+
 		const itemHasBeenCreated = inMemoryQuestionsRepository.items.find(
-			(item) => item.id === question.id,
+			(item) => item.id === question?.id,
 		);
 
-		expect(question.id).toBeTruthy();
+		expect(result.isRight()).toBeTruthy();
+		expect(question?.id).toBeTruthy();
 		expect(itemHasBeenCreated).toBeTruthy();
-		expect(question.slug.value).toEqual("title-test");
-		expect(question.title).toEqual("Title test");
+		expect(question?.slug.value).toEqual("title-test");
+		expect(question?.title).toEqual("Title test");
 	});
 });

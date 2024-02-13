@@ -1,4 +1,7 @@
+import { left, right } from "@core/either";
 import { AnswersRepository } from "@forum-repositories/answers-repository";
+import { NotAllowedError } from "@forum-use-case-errors/not-allowed-error";
+import { ResourceNotFoundError } from "@forum-use-case-errors/resource-not-found-error";
 import {
 	EditAnswerUseCaseProps,
 	EditAnswerUseCaseResponse,
@@ -15,19 +18,19 @@ export class EditAnswerUseCase {
 		const answer = await this.answersRepository.findById(answerId);
 
 		if (!answer) {
-			throw new Error("Answer nof found.");
+			return left(new ResourceNotFoundError());
 		}
 
 		if (authorId !== answer.authorId.toString()) {
-			throw new Error("Not allowed.");
+			return left(new NotAllowedError());
 		}
 
 		answer.content = content;
 
 		await this.answersRepository.save(answer);
 
-		return {
+		return right({
 			answer,
-		};
+		});
 	}
 }

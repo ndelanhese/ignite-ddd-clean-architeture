@@ -16,13 +16,19 @@ describe("Get question by id", () => {
 
 		await inMemoryQuestionsRepository.create(newQuestion);
 
-		const { question } = await sut.execute({
+		const result = await sut.execute({
 			id: fakeQuestionId.toString(),
 		});
 
-		expect(question.id).toBeTruthy();
-		expect(question.id.toValue()).toEqual(newQuestion.id.toValue());
-		expect(question.slug.value).toEqual(newQuestion.slug.value);
-		expect(question.title).toEqual(newQuestion.title);
+		if (result.isLeft()) throw new Error(result.value.message);
+
+		expect(result.isRight()).toBeTruthy();
+		expect(result.value?.question).toBeTruthy();
+		expect(result.value?.question.id).toBeTruthy();
+		expect(result.value?.question.id.toValue()).toEqual(
+			newQuestion.id.toValue(),
+		);
+		expect(result.value?.question.slug.value).toEqual(newQuestion.slug.value);
+		expect(result.value?.question.title).toEqual(newQuestion.title);
 	});
 });

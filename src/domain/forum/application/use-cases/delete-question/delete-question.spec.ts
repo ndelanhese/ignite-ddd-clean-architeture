@@ -1,6 +1,8 @@
 import { UniqueEntityId } from "@core/value-objects/unique-entity-id";
+import { NotAllowedError } from "@forum-use-case-errors/not-allowed-error";
 import { makeQuestion } from "@test-factories/make-question";
 import { InMemoryQuestionsRepository } from "@test-repositories/in-memory-questions-repository";
+import { expect } from "vitest";
 import { DeleteQuestionUseCase } from "./delete-question";
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository;
@@ -38,12 +40,12 @@ describe("Delete a question", () => {
 
 		await inMemoryQuestionsRepository.create(newQuestion);
 
-		expect(
-			async () =>
-				await sut.execute({
-					authorId: "wrong-author-id",
-					questionId: questionId.toString(),
-				}),
-		).rejects.toBeInstanceOf(Error);
+		const result = await sut.execute({
+			authorId: "wrong-author-id",
+			questionId: questionId.toString(),
+		});
+
+		expect(result.isLeft()).toBe(true);
+		expect(result.value).toBeInstanceOf(NotAllowedError);
 	});
 });

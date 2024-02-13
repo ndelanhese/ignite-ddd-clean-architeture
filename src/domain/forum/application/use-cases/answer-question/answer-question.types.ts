@@ -1,3 +1,4 @@
+import { Either } from "@core/either";
 import { Answer } from "@forum-entities/answer";
 
 export type AnswerQuestionUseCaseProps = {
@@ -6,6 +7,9 @@ export type AnswerQuestionUseCaseProps = {
 	content: string;
 };
 
-export type AnswerQuestionUseCaseResponse = {
-	answer: Answer;
-};
+export type AnswerQuestionUseCaseResponse = Either<
+	null,
+	{
+		answer: Answer;
+	}
+>;
