@@ -8,6 +8,7 @@ export type EditQuestionUseCaseProps = {
 	questionId: string;
 	title: string;
 	content: string;
+	attachmentsIds: string[];
 };
 
 export type EditQuestionUseCaseResponse = Either<

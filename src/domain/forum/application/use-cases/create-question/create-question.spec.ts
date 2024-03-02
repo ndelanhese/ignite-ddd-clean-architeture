@@ -30,8 +30,8 @@ describe("Create Questions", () => {
 		expect(itemHasBeenCreated).toBeTruthy();
 		expect(question?.slug.value).toEqual("title-test");
 		expect(question?.title).toEqual("Title test");
-		expect(question?.attachments).toHaveLength(2);
-		expect(question?.attachments).toEqual([
+		expect(question?.attachments.compareItems).toHaveLength(2);
+		expect(question?.attachments.currentItems).toEqual([
 			expect.objectContaining({ attachmentId: new UniqueEntityId("1") }),
 			expect.objectContaining({ attachmentId: new UniqueEntityId("2") }),
 		]);

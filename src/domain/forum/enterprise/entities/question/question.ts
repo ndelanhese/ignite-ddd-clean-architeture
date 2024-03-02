@@ -1,10 +1,10 @@
 import { AggregateRoot } from "@core/entities/aggregate-root";
 import { Optional } from "@core/types/optional";
 import { UniqueEntityId } from "@core/value-objects/unique-entity-id";
+import { QuestionAttachmentList } from "@forum-entities/question-attachment-list";
 import { Slug } from "@forum-value-objects/slug";
 import { QuestionProps } from "./question.types";
 import dayjs = require("dayjs");
-import { QuestionAttachment } from "@forum-entities/question-attachment";
 
 export class Question extends AggregateRoot<QuestionProps> {
 	static create(
@@ -15,7 +15,7 @@ export class Question extends AggregateRoot<QuestionProps> {
 			{
 				...props,
 				slug: props.slug ?? Slug.createFromText(props.title),
-				attachments: props.attachments ?? [],
+				attachments: props.attachments ?? new QuestionAttachmentList(),
 				createdAt: props.createdAt ?? new Date(),
 			},
 			id,
@@ -73,7 +73,7 @@ export class Question extends AggregateRoot<QuestionProps> {
 		this.touch();
 	}
 
-	set attachments(attachments: QuestionAttachment[]) {
+	set attachments(attachments: QuestionAttachmentList) {
 		this.props.attachments = attachments;
 	}
 

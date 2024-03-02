@@ -1,4 +1,8 @@
 import { left, right } from "@core/either";
+import { UniqueEntityId } from "@core/value-objects/unique-entity-id";
+import { QuestionAttachment } from "@forum-entities/question-attachment";
+import { QuestionAttachmentList } from "@forum-entities/question-attachment-list";
+import { QuestionAttachmentsRepository } from "@forum-repositories/question-attachments-repository";
 import { QuestionsRepository } from "@forum-repositories/questions-repository";
 import { NotAllowedError } from "@forum-use-case-errors/not-allowed-error";
 import { ResourceNotFoundError } from "@forum-use-case-errors/resource-not-found-error";
@@ -8,13 +12,17 @@ import {
 } from "./edit-question.types";
 
 export class EditQuestionUseCase {
-	constructor(private questionsRepository: QuestionsRepository) {}
+	constructor(
+		private questionsRepository: QuestionsRepository,
+		private questionAttachmentsRepository: QuestionAttachmentsRepository,
+	) {}
 
 	async execute({
 		authorId,
 		questionId,
 		content,
 		title,
+		attachmentsIds,
 	}: EditQuestionUseCaseProps): Promise<EditQuestionUseCaseResponse> {
 		const question = await this.questionsRepository.findById(questionId);
 
@@ -26,8 +34,24 @@ export class EditQuestionUseCase {
 			return left(new NotAllowedError());
 		}
 
+		const currentQuestionAttachments =
+			await this.questionAttachmentsRepository.findManyByQuestionId(questionId);
+		const questionAttachmentList = new QuestionAttachmentList(
+			currentQuestionAttachments,
+		);
+
+		const questionAttachments = attachmentsIds.map((attachmentId) =>
+			QuestionAttachment.create({
+				attachmentId: new UniqueEntityId(attachmentId),
+				questionId: question.id,
+			}),
+		);
+
+		questionAttachmentList.update(questionAttachments);
+
 		question.title = title;
 		question.content = content;
+		question.attachments = questionAttachmentList;
 
 		await this.questionsRepository.save(question);
 

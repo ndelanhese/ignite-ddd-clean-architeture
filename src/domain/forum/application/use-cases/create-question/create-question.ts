@@ -2,6 +2,7 @@ import { right } from "@core/either";
 import { UniqueEntityId } from "@core/value-objects/unique-entity-id";
 import { Question } from "@forum-entities/question";
 import { QuestionAttachment } from "@forum-entities/question-attachment";
+import { QuestionAttachmentList } from "@forum-entities/question-attachment-list";
 import { QuestionsRepository } from "@forum-repositories/questions-repository";
 import {
 	CreateQuestionUseCaseProps,
@@ -30,7 +31,7 @@ export class CreateQuestionUseCase {
 			}),
 		);
 
-		question.attachments = questionAttachments;
+		question.attachments = new QuestionAttachmentList(questionAttachments);
 
 		await this.questionsRepository.create(question);
 
