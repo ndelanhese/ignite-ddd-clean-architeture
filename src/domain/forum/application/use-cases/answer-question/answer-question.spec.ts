@@ -1,3 +1,4 @@
+import { UniqueEntityId } from "@core/value-objects/unique-entity-id";
 import { InMemoryAnswersRepository } from "@test-repositories/in-memory-answers-repository";
 import { AnswerQuestionUseCase } from "./answer-question";
 
@@ -15,6 +16,7 @@ describe("Create Answer", () => {
 			questionId: "1",
 			instructorId: "1",
 			content: "New answer",
+			attachmentsIds: ["1", "2"],
 		});
 
 		const answer = result.value?.answer;
@@ -26,5 +28,10 @@ describe("Create Answer", () => {
 		expect(answer?.id).toBeTruthy();
 		expect(itemHasBeenCreated).toBeTruthy();
 		expect(answer?.content).toEqual("New answer");
+		expect(answer?.attachments.compareItems).toHaveLength(2);
+		expect(answer?.attachments.currentItems).toEqual([
+			expect.objectContaining({ attachmentId: new UniqueEntityId("1") }),
+			expect.objectContaining({ attachmentId: new UniqueEntityId("2") }),
+		]);
 	});
 });

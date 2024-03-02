@@ -2,16 +2,26 @@ import { UniqueEntityId } from "@core/value-objects/unique-entity-id";
 import { faker } from "@faker-js/faker";
 import { NotAllowedError } from "@forum-use-case-errors/not-allowed-error";
 import { makeAnswer } from "@test-factories/make-answer";
+import { makeAnswerAttachment } from "@test-factories/make-answer-attachments";
+import { InMemoryAnswerAttachmentsRepository } from "@test-repositories/in-memory-answer-attachments-repository";
 import { InMemoryAnswersRepository } from "@test-repositories/in-memory-answers-repository";
 import { EditAnswerUseCase } from "./edit-answer";
 
 let inMemoryAnswersRepository: InMemoryAnswersRepository;
+let inMemoryAnswersAttachmentsRepository: InMemoryAnswerAttachmentsRepository;
 let sut: EditAnswerUseCase;
 
 describe("Edit an answer", () => {
 	beforeEach(() => {
-		inMemoryAnswersRepository = new InMemoryAnswersRepository();
-		sut = new EditAnswerUseCase(inMemoryAnswersRepository);
+		inMemoryAnswersAttachmentsRepository =
+			new InMemoryAnswerAttachmentsRepository();
+		inMemoryAnswersRepository = new InMemoryAnswersRepository(
+			inMemoryAnswersAttachmentsRepository,
+		);
+		sut = new EditAnswerUseCase(
+			inMemoryAnswersRepository,
+			inMemoryAnswersAttachmentsRepository,
+		);
 	});
 
 	it("should be able to edit an answer", async () => {
@@ -21,11 +31,27 @@ describe("Edit an answer", () => {
 
 		await inMemoryAnswersRepository.create(newAnswer);
 
+		const { newAnswerAttachment: firstAttachment } = makeAnswerAttachment({
+			attachmentId: new UniqueEntityId("1"),
+			answerId,
+		});
+
+		const { newAnswerAttachment: secondAttachment } = makeAnswerAttachment({
+			attachmentId: new UniqueEntityId("2"),
+			answerId,
+		});
+
+		inMemoryAnswersAttachmentsRepository.items.push(
+			firstAttachment,
+			secondAttachment,
+		);
+
 		const fakeAnswerContent = faker.lorem.text();
 		await sut.execute({
 			authorId: authorId.toString(),
 			answerId: answerId.toString(),
 			content: fakeAnswerContent,
+			attachmentsIds: ["1", "3"],
 		});
 
 		const foundedAnswer = await inMemoryAnswersRepository.findById(
@@ -35,6 +61,11 @@ describe("Edit an answer", () => {
 		expect(foundedAnswer).toMatchObject({
 			content: fakeAnswerContent,
 		});
+		expect(foundedAnswer?.attachments.compareItems).toHaveLength(2);
+		expect(foundedAnswer?.attachments.currentItems).toEqual([
+			expect.objectContaining({ attachmentId: new UniqueEntityId("1") }),
+			expect.objectContaining({ attachmentId: new UniqueEntityId("3") }),
+		]);
 	});
 
 	it("should not be able to edit an answer from another author", async () => {
@@ -50,6 +81,7 @@ describe("Edit an answer", () => {
 			authorId: "wrong-author-id",
 			answerId: answerId.toString(),
 			content: fakeAnswerContent,
+			attachmentsIds: ["9"],
 		});
 
 		expect(result.isLeft()).toBe(true);
