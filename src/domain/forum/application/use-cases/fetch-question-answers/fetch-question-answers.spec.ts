@@ -1,15 +1,21 @@
 import { UniqueEntityId } from "@core/value-objects/unique-entity-id";
 import { faker } from "@faker-js/faker";
 import { makeAnswer } from "@test-factories/make-answer";
+import { InMemoryAnswerAttachmentsRepository } from "@test-repositories/in-memory-answer-attachments-repository";
 import { InMemoryAnswersRepository } from "@test-repositories/in-memory-answers-repository";
 import { FetchQuestionAnswersUseCase } from "./fetch-question-answers";
 
 let inMemoryAnswersRepository: InMemoryAnswersRepository;
+let inMemoryAnswersAttachmentsRepository: InMemoryAnswerAttachmentsRepository;
 let sut: FetchQuestionAnswersUseCase;
 
 describe("Fetch question answers", () => {
 	beforeEach(() => {
-		inMemoryAnswersRepository = new InMemoryAnswersRepository();
+		inMemoryAnswersAttachmentsRepository =
+			new InMemoryAnswerAttachmentsRepository();
+		inMemoryAnswersRepository = new InMemoryAnswersRepository(
+			inMemoryAnswersAttachmentsRepository,
+		);
 		sut = new FetchQuestionAnswersUseCase(inMemoryAnswersRepository);
 	});
 
