@@ -1,19 +1,21 @@
-import { Entity } from "@core/entities/entity";
+import { AggregateRoot } from "@core/entities/aggregate-root";
 import { Optional } from "@core/types/optional";
 import { UniqueEntityId } from "@core/value-objects/unique-entity-id";
+import { Slug } from "@forum-value-objects/slug";
 import { QuestionProps } from "./question.types";
 import dayjs = require("dayjs");
-import { Slug } from "@forum-value-objects/slug";
+import { QuestionAttachment } from "@forum-entities/question-attachment";
 
-export class Question extends Entity<QuestionProps> {
+export class Question extends AggregateRoot<QuestionProps> {
 	static create(
-		props: Optional<QuestionProps, "createdAt" | "slug">,
+		props: Optional<QuestionProps, "createdAt" | "slug" | "attachments">,
 		id?: UniqueEntityId,
 	) {
 		const question = new Question(
 			{
 				...props,
 				slug: props.slug ?? Slug.createFromText(props.title),
+				attachments: props.attachments ?? [],
 				createdAt: props.createdAt ?? new Date(),
 			},
 			id,
@@ -42,6 +44,10 @@ export class Question extends Entity<QuestionProps> {
 		return this.props.slug;
 	}
 
+	get attachments() {
+		return this.props.attachments;
+	}
+
 	get createdAt() {
 		return this.props.createdAt;
 	}
@@ -65,6 +71,10 @@ export class Question extends Entity<QuestionProps> {
 	set content(content: string) {
 		this.props.content = content;
 		this.touch();
+	}
+
+	set attachments(attachments: QuestionAttachment[]) {
+		this.props.attachments = attachments;
 	}
 
 	set title(title: string) {

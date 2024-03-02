@@ -1,6 +1,7 @@
 import { right } from "@core/either";
 import { UniqueEntityId } from "@core/value-objects/unique-entity-id";
 import { Question } from "@forum-entities/question";
+import { QuestionAttachment } from "@forum-entities/question-attachment";
 import { QuestionsRepository } from "@forum-repositories/questions-repository";
 import {
 	CreateQuestionUseCaseProps,
@@ -14,12 +15,22 @@ export class CreateQuestionUseCase {
 		authorId,
 		content,
 		title,
+		attachmentsIds,
 	}: CreateQuestionUseCaseProps): Promise<CreateQuestionUseCaseResponse> {
 		const question = Question.create({
 			authorId: new UniqueEntityId(authorId),
 			title,
 			content,
 		});
+
+		const questionAttachments = attachmentsIds.map((attachmentId) =>
+			QuestionAttachment.create({
+				attachmentId: new UniqueEntityId(attachmentId),
+				questionId: question.id,
+			}),
+		);
+
+		question.attachments = questionAttachments;
 
 		await this.questionsRepository.create(question);
 
