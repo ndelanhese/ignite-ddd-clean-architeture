@@ -1,6 +1,6 @@
 import { left, right } from "@core/either";
+import { ResourceNotFoundError } from "@errors/resource-not-found-error";
 import { QuestionsRepository } from "@forum-repositories/questions-repository";
-import { ResourceNotFoundError } from "@forum-use-case-errors/resource-not-found-error";
 import {
 	GetQuestionByIdUseCaseProps,
 	GetQuestionByIdUseCaseResponse,

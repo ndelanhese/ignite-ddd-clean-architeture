@@ -1,11 +1,11 @@
 import { left, right } from "@core/either";
 import { UniqueEntityId } from "@core/value-objects/unique-entity-id";
+import { NotAllowedError } from "@errors/not-allowed-error";
+import { ResourceNotFoundError } from "@errors/resource-not-found-error";
 import { AnswerAttachment } from "@forum-entities/answer-attachment";
 import { AnswerAttachmentList } from "@forum-entities/answer-attachment-list";
 import { AnswerAttachmentsRepository } from "@forum-repositories/answer-attachments-repository";
 import { AnswersRepository } from "@forum-repositories/answers-repository";
-import { NotAllowedError } from "@forum-use-case-errors/not-allowed-error";
-import { ResourceNotFoundError } from "@forum-use-case-errors/resource-not-found-error";
 import {
 	EditAnswerUseCaseProps,
 	EditAnswerUseCaseResponse,

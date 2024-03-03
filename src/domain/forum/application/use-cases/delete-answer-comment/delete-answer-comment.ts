@@ -1,7 +1,7 @@
 import { left, right } from "@core/either";
+import { NotAllowedError } from "@errors/not-allowed-error";
+import { ResourceNotFoundError } from "@errors/resource-not-found-error";
 import { AnswerCommentsRepository } from "@forum-repositories/answer-comments-repository";
-import { NotAllowedError } from "@forum-use-case-errors/not-allowed-error";
-import { ResourceNotFoundError } from "@forum-use-case-errors/resource-not-found-error";
 import {
 	DeleteAnswerCommentUseCaseProps,
 	DeleteAnswerCommentUseCaseResponse,

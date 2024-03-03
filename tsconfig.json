@@ -18,7 +18,7 @@
       "@notification-use-cases/*": ["./src/domain/notification/application/use-cases/*"],
       "@forum-value-objects/*": ["./src/domain/forum/enterprise/value-objects/*"],
       "@notification-value-objects/*": ["./src/domain/notification/enterprise/value-objects/*"],
-      "@forum-use-case-errors/*": ["./src/domain/forum/application/use-case-error/*"],
+      "@errors/*": ["./src/core/errors/use-case-error/*"],
       "@notification-use-case-errors/*": ["./src/domain/notification/application/use-case-error/*"],
       "@core/*": ["./src/core/*"],
       "@test-repositories/*": ["./test/repositories/*"],

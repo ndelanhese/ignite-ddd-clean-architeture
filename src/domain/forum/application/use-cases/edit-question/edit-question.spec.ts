@@ -1,6 +1,6 @@
 import { UniqueEntityId } from "@core/value-objects/unique-entity-id";
+import { NotAllowedError } from "@errors/not-allowed-error";
 import { faker } from "@faker-js/faker";
-import { NotAllowedError } from "@forum-use-case-errors/not-allowed-error";
 import { makeQuestion } from "@test-factories/make-question";
 import { makeQuestionAttachment } from "@test-factories/make-question-attachments";
 import { InMemoryQuestionAttachmentsRepository } from "@test-repositories/in-memory-question-attachments-repository";

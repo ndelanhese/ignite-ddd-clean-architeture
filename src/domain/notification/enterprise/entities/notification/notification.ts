@@ -37,4 +37,8 @@ export class Notification extends Entity<NotificationProps> {
 	get readAt() {
 		return this.props.readAt;
 	}
+
+	read() {
+		this.props.readAt = new Date();
+	}
 }
