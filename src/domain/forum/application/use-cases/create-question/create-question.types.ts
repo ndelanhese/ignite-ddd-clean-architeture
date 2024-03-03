@@ -5,6 +5,7 @@ export type CreateQuestionUseCaseProps = {
 	authorId: string;
 	title: string;
 	content: string;
+	attachmentsIds: string[];
 };
 
 export type CreateQuestionUseCaseResponse = Either<

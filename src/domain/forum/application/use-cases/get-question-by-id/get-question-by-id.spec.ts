@@ -1,13 +1,19 @@
 import { makeQuestion } from "@test-factories/make-question";
+import { InMemoryQuestionAttachmentsRepository } from "@test-repositories/in-memory-question-attachments-repository";
 import { InMemoryQuestionsRepository } from "@test-repositories/in-memory-questions-repository";
 import { GetQuestionByIdUseCase } from "./get-question-by-id";
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository;
+let inMemoryQuestionsAttachmentsRepository: InMemoryQuestionAttachmentsRepository;
 let sut: GetQuestionByIdUseCase;
 
 describe("Get question by id", () => {
 	beforeEach(() => {
-		inMemoryQuestionsRepository = new InMemoryQuestionsRepository();
+		inMemoryQuestionsAttachmentsRepository =
+			new InMemoryQuestionAttachmentsRepository();
+		inMemoryQuestionsRepository = new InMemoryQuestionsRepository(
+			inMemoryQuestionsAttachmentsRepository,
+		);
 		sut = new GetQuestionByIdUseCase(inMemoryQuestionsRepository);
 	});
 

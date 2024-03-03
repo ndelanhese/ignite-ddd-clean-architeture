@@ -1,4 +1,5 @@
 import { UniqueEntityId } from "@core/value-objects/unique-entity-id";
+import { QuestionAttachmentList } from "@forum-entities/question-attachment-list";
 import { Slug } from "@forum-value-objects/slug";
 
 export type QuestionProps = {
@@ -7,6 +8,7 @@ export type QuestionProps = {
 	title: string;
 	content: string;
 	slug: Slug;
+	attachments: QuestionAttachmentList;
 	createdAt: Date;
 	updatedAt?: Date;
 };

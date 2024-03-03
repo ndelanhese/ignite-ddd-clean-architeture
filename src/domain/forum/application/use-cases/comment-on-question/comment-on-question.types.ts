@@ -1,6 +1,6 @@
 import { Either } from "@core/either";
+import { ResourceNotFoundError } from "@errors/resource-not-found-error";
 import { QuestionComment } from "@forum-entities/question-comment";
-import { ResourceNotFoundError } from "@forum-use-case-errors/resource-not-found-error";
 
 export type CommentOnQuestionUseCaseProps = {
 	authorId: string;

@@ -1,5 +1,5 @@
 import { UniqueEntityId } from "@core/value-objects/unique-entity-id";
-import { NotAllowedError } from "@forum-use-case-errors/not-allowed-error";
+import { NotAllowedError } from "@errors/not-allowed-error";
 import { makeAnswer } from "@test-factories/make-answer";
 import { makeQuestion } from "@test-factories/make-question";
 import { InMemoryAnswersRepository } from "@test-repositories/in-memory-answers-repository";

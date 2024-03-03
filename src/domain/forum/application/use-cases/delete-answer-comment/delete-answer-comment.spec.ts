@@ -1,6 +1,6 @@
 import { UniqueEntityId } from "@core/value-objects/unique-entity-id";
+import { NotAllowedError } from "@errors/not-allowed-error";
 import { faker } from "@faker-js/faker";
-import { NotAllowedError } from "@forum-use-case-errors/not-allowed-error";
 import { makeAnswerComment } from "@test-factories/make-answer-comment";
 import { InMemoryAnswerCommentsRepository } from "@test-repositories/in-memory-answer-comments-repository";
 import { DeleteAnswerCommentUseCase } from "./delete-answer-comment";

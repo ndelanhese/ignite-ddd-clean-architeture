@@ -1,10 +1,15 @@
 import { PaginationParams } from "@core/repositories/pagination-params";
 import { UniqueEntityId } from "@core/value-objects/unique-entity-id";
 import { Answer } from "@forum-entities/answer";
+import { AnswerAttachmentsRepository } from "@forum-repositories/answer-attachments-repository";
 import { AnswersRepository } from "@forum-repositories/answers-repository";
 
 export class InMemoryAnswersRepository implements AnswersRepository {
 	public items: Answer[] = [];
+
+	constructor(
+		private answerAttachmentsRepository: AnswerAttachmentsRepository,
+	) {}
 
 	async findById(id: string): Promise<Answer | null> {
 		const uniqueEntityId = new UniqueEntityId(id);
@@ -40,5 +45,9 @@ export class InMemoryAnswersRepository implements AnswersRepository {
 		const itemIndex = this.items.findIndex((item) => item.id === answer.id);
 
 		this.items.splice(itemIndex, 1);
+
+		await this.answerAttachmentsRepository.deleteManyByAnswerId(
+			answer.id.toString(),
+		);
 	}
 }

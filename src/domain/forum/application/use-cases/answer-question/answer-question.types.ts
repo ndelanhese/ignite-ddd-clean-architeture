@@ -4,6 +4,7 @@ import { Answer } from "@forum-entities/answer";
 export type AnswerQuestionUseCaseProps = {
 	instructorId: string;
 	questionId: string;
+	attachmentsIds: string[];
 	content: string;
 };
 

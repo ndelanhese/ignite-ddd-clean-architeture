@@ -1,9 +1,9 @@
 import { left, right } from "@core/either";
 import { UniqueEntityId } from "@core/value-objects/unique-entity-id";
+import { ResourceNotFoundError } from "@errors/resource-not-found-error";
 import { AnswerComment } from "@forum-entities/answer-comment";
 import { AnswerCommentsRepository } from "@forum-repositories/answer-comments-repository";
 import { AnswersRepository } from "@forum-repositories/answers-repository";
-import { ResourceNotFoundError } from "@forum-use-case-errors/resource-not-found-error";
 import {
 	CommentOnAnswerUseCaseProps,
 	CommentOnAnswerUseCaseResponse,
