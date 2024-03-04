@@ -1,3 +1,4 @@
+import { DomainEvents } from "@core/events/domain-events";
 import { PaginationParams } from "@core/repositories/pagination-params";
 import { UniqueEntityId } from "@core/value-objects/unique-entity-id";
 import { Question } from "@forum-entities/question";
@@ -36,10 +37,14 @@ export class InMemoryQuestionsRepository implements QuestionsRepository {
 		const itemIndex = this.items.findIndex((item) => item.id === question.id);
 
 		this.items[itemIndex] = question;
+
+		DomainEvents.dispatchEventsForAggregate(question.id);
 	}
 
 	async create(question: Question) {
 		this.items.push(question);
+
+		DomainEvents.dispatchEventsForAggregate(question.id);
 	}
 
 	async delete(question: Question): Promise<void> {

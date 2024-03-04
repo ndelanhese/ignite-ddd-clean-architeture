@@ -5,6 +5,7 @@ import { QuestionAttachmentList } from "@forum-entities/question-attachment-list
 import { Slug } from "@forum-value-objects/slug";
 import { QuestionProps } from "./question.types";
 import dayjs = require("dayjs");
+import { QuestionBestQuestionChosenEvent } from "@forum-events/question-best-answer-chosen-event";
 
 export class Question extends AggregateRoot<QuestionProps> {
 	static create(
@@ -85,6 +86,17 @@ export class Question extends AggregateRoot<QuestionProps> {
 	}
 
 	set bestAnswerId(bestAnswerId: UniqueEntityId | undefined) {
+		if (!bestAnswerId) return;
+
+		if (
+			!this.props.bestAnswerId ||
+			!this.props.bestAnswerId.equals(bestAnswerId)
+		) {
+			this.addDomainEvent(
+				new QuestionBestQuestionChosenEvent(this, bestAnswerId),
+			);
+		}
+
 		this.props.bestAnswerId = bestAnswerId;
 		this.touch();
 	}
