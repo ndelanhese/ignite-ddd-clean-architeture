@@ -7,7 +7,7 @@ export const makeAnswer = (
 	override: Partial<AnswerProps> = {},
 	id?: UniqueEntityId,
 ) => {
-	const fakeAnswerId = id ?? new UniqueEntityId(faker.vehicle.model());
+	const fakeAnswerId = id;
 	const newAnswer = Answer.create(
 		{
 			questionId: new UniqueEntityId(),

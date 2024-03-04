@@ -11,6 +11,7 @@
 
     "paths": {
       "@forum-entities/*": ["./src/domain/forum/enterprise/entities/*"],
+      "@forum-events/*": ["./src/domain/forum/enterprise/events/*"],
       "@notification-entities/*": ["./src/domain/notification/enterprise/entities/*"],
       "@forum-repositories/*": ["./src/domain/forum/application/repositories/*"],
       "@notification-repositories/*": ["./src/domain/notification/application/repositories/*"],
@@ -23,6 +24,7 @@
       "@core/*": ["./src/core/*"],
       "@test-repositories/*": ["./test/repositories/*"],
       "@test-factories/*": ["./test/factories/*"],
+      "@test-utils/*": ["./test/utils/*"],
       "@/*": ["./src/*"],
     },
 
